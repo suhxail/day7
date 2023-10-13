@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function handleData() {
+            let data = JSON.parse(this.responseText)
+            console.log(data)
+            console.log(data[0]["region"])
+
+            // task 1
+            const result = data.filter(obj => {
+                if (obj.region === "Asia") {
+                    return obj.region
+                }
+            })
+            console.log(result)
+
+            // task 2
+            const value = data.filter(obj => {
+                if (obj.population < 200000) {
+                    return obj.population
+                }
+            })
+            console.log(value)
+
+            // task3
+            const nameCapitalFlag = data.forEach((obj) =>
+                console.log("Name:", obj.name.common, "Capital:", obj.capital, "Flag:", obj.flag),
+            )
+
+            // task4
+            const totalPopulation = data.reduce((acc, obj) => {
+                if (obj.population) {
+                    return parseInt(acc) + parseInt(obj.population)
+                } else {
+                    return acc
+                }
+            }, 0)
+            console.log(totalPopulation)
+
+            // task5
+            const countries = data.filter(obj => {
+                if (obj.currencies && obj.currencies.USD) {
+                    return obj.currencies
+                }
+            })
+            console.log(countries)
+        }
+        const req = new XMLHttpRequest();
+        req.addEventListener('load', handleData);
+        req.open('GET', 'https://restcountries.com/v3.1/all');
+        req.send()
+    </script>
+</body>
+
+</html>
